@@ -28,10 +28,10 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        # 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
     # SQLALCHEMY_DATABASE_URI = 'mysql://flasksql:123456@85.10.205.173/flasksql'
-    # SQLALCHEMY_DATABASE_URI = 'postgres://hixwsddzkurpll:b79219acb9e07b8d5577e2c4973c995538bb3a9ac7743d4e30081814f98a7400@ec2-184-73-247-240.compute-1.amazonaws.com:5432/dec335tk9t63kh'
+    SQLALCHEMY_DATABASE_URI = 'postgres://acpydxguzgmwke:837ed935019b286dcf54a6190e498d8057c7943e2c0847d2d784820fb4bf1e9e@ec2-50-19-113-219.compute-1.amazonaws.com:5432/dbu172eh5adihm'
 
 
 class TestingConfig(Config):
