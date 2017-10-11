@@ -53,7 +53,7 @@ def write_post():
                     author=current_user._get_current_object())
         db.session.add(post)
         return redirect(url_for('.index'))
-    return render_template('test.html',form=form)
+    return render_template('write_post.html',form=form)
     
     
 @main.route('/agreeadd',methods=['GET', 'POST'])
