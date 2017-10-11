@@ -1,0 +1,97 @@
+{% for post in posts %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+            <div class="container">
+            <div class="row clearfix">
+            <div class="col-md-9 column">
+             <h3><strong>{{post.title}}</strong></h3>
+            </div>
+            <div class="col-md-8 column">
+            <div class="post-date">{{ post.timestamp}}</div>
+            <a href="{{ url_for('.user', username=post.author.username) }}">
+                        <img src="{{ post.author.gravatar(size=24) }}">
+                        <strong>{{post.author.username}} </strong><b class="caret"></b>
+                    </a>
+                <div class ="{{post.id}}">
+                {% if post.body_html %}
+                    {{ post.body_html[:100] | safe }}{% if post.quanwen() %}<a  id = "{{post.id}}" class="td_class">...阅读全文</a>{% endif %}
+                {% else %}
+                    {{ post.body }}
+                {% endif %}               
+                </div>
+
+                <div class ="{{post.id}}" href='#'>
+                {% if post.body_html %}
+                    {{ post.body_html | safe }}<a  id = "{{post.id}}" class="td_class">收起</a>
+                {% else %}
+                    {{ post.body }}
+                {% endif %}
+                </div> 
+                  
+                
+                {% if current_user == post.author %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-primary">编辑</span>
+                </a>
+                {% elif current_user.is_administrator() %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-danger">编辑 [管理员]</span>
+                </a>    
+                {% endif %}
+                
+                <a href="{{ url_for('.post', id=post.id) }}">
+                    <span class="label label-primary">查看</span> 
+                </a>
+
+                <a href="{{ url_for('.post', id=post.id) }}#comments">
+                    <span class="label label-primary">{{ post.comments.count() }} 评论</span>
+                </a>
+                
+                <a>
+                    <span class="label label-primary"><span id = "{{post.id}}" class="zan_class"> {{post.agrees.count()}}赞 </span></span>
+                </a>
+            </div>
+            </div>
+            </div>
+            </div>
+        </div>
+{% endfor %}
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $(".td_class").click(function(){
+  var myid = $(this).attr('id')
+  $("."+myid).toggle()
+  });
+});
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $("[href='#']").hide()
+});
+</script>
+
+<script type=text/javascript>
+  $(function() {
+    $('.zan_class').bind('click', function() {
+    my = $(this).attr('id')
+    a= $(this)
+      $.getJSON($SCRIPT_ROOT + '/agreeadd', {
+        id: my
+      }, function(data) {
+        <!-- alert(data.result); -->
+        a.html(data.result)
+      });
+      return false;
+    });
+  });
+</script>
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>

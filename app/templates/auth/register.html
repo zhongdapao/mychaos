@@ -1,0 +1,23 @@
+{% extends "base1.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky - Register{% endblock %}
+
+
+{% block page_content %}
+
+<div class="row-fluid">
+		<div class="col-xs-4 span4"> </div>
+		<div class="col-xs-4 span4">
+            <div class="page-header">
+                <center><h1>注册</h1></center>
+            </div>
+        <div class="col-md-12">
+        {{ wtf.quick_form(form) }}
+        </div>
+        </div>
+        <div class="col-xs-4 span4"></div>
+        
+</div>
+
+{% endblock %}
